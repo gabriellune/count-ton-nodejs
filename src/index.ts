@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as express from 'express';
 import { CountApiController } from './api/v1/CountApiController';
 import { UserController } from './api/v1/UserController';
+import logger from 'jet-logger';
 
 dotenv.config()
 
@@ -24,7 +25,7 @@ export class App extends Server {
     
     public start(port: number): void {
         this.app.listen(port, () => {
-            console.log('Server listening on port: ' + port);
+            logger.info('Server listening on port: ' + port);
         })
     }
 }

@@ -1,7 +1,8 @@
 import { Server } from '@overnightjs/core';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import * as express from 'express';
 import { CountApiController } from './api/v1/CountApiController';
-import * as express from 'express'
+import { UserController } from './api/v1/UserController';
 
 dotenv.config()
 
@@ -16,7 +17,8 @@ export class App extends Server {
 
     private setupControllers(): void {
         super.addControllers([
-            new CountApiController()
+            new CountApiController(),
+            new UserController()
         ]);
     }
     

@@ -18,4 +18,14 @@ export class UserRepository {
 
         await DbUser.update({ cpf, name, email }, { where: { cpf } })
     }
+
+    async getByCpf(cpf: string): Promise<User> {
+        const result = await DbUser.findOne({
+            where: {
+                cpf
+            }
+        })
+
+        return result.toJSON() as User
+    }
 }

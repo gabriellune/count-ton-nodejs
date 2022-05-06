@@ -13,18 +13,28 @@ export class CountApiController {
 
     @Get()
     async getCount(_req: Request, res: Response): Promise<CountApi> {
+        let msg: string
+        let status: number
+
         try {
             const result = await this.service.getCount()
 
             return res.status(200).json(success("OK", { data: result }, res.statusCode));
 
         } catch (err) {
-            return res.status(err.status >= 400).json(error(err.message, res.statusCode))
+            msg = err.message
+            status = err.status
+
+        } finally {
+            res.status(status).json(error(msg, res.statusCode))
         }
     }
 
     @Post('increase-visits')
     async increaseVisits(req: Request, res: Response): Promise<CountApi> {
+        let msg: string
+        let status: number
+
         try {
             const { value } = req.body
             const result = await this.service.increaseVisits(value)
@@ -32,7 +42,11 @@ export class CountApiController {
             return res.status(200).json(success("OK", { data: result }, res.statusCode));
 
         } catch (err) {
-            return res.status(err.status >= 400).json(error(err.message, res.statusCode))
+            msg = err.message
+            status = err.status
+
+        } finally {
+            res.status(status).json(error(msg, res.statusCode))
         }
     }
 }

@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize'
 
-export const sequelize = new Sequelize('test', 'root', '160412Timao@', {
-    host: "localhost",
-    dialect: "mysql"
+export const sequelize = new Sequelize(process.env.TON_SITE, process.env.TON_SITE, process.env.TON_SITE, {
+    host: process.env.TON_SITE,
+    dialect: 'mysql'
 })
 export class MySqlConfig {
 

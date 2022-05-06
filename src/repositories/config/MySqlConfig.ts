@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize'
 
-export const sequelize = new Sequelize('test', 'root', 'password', {
+export const sequelize = new Sequelize('test', 'root', '160412Timao@', {
     host: "localhost",
     dialect: "mysql"
 })

@@ -2,6 +2,7 @@ import { Controller, Post, Put } from "@overnightjs/core";
 import { Request, Response } from 'express';
 import { User } from "../../models/User";
 import { UserService } from "../../services/UserService";
+import { success, error } from "../../interceptors/ResponseInterceptor" 
 
 @Controller('api/v1/user')
 export class UserController {
@@ -11,37 +12,30 @@ export class UserController {
     ) { }
 
     @Post()
-    async create(req: Request, res: Response): Promise<User> {
+    async create(req: Request, res: Response): Promise<Object> {
         try {
             const payload: User = req.body
 
             await this.service.create(payload)
 
-            return payload
+            return res.status(200).json(success("OK", { data: "User created"}, res.statusCode));
 
-        } catch (error) {
-            res.status(error.status || 400).send({
-                error: {
-                    status: error.status,
-                    message: error.message
-                }
-            })
+        } catch (err) {
+            return res.status(err.status >= 400).json(error(err.message, res.statusCode))
         }
     }
 
     @Put()
-    async update(req: Request, res: Response): Promise<void> {
+    async update(req: Request, res: Response): Promise<Object> {
         try {
             const payload: Partial<User> = req.body
+
             await this.service.update(payload)
 
-        } catch (error) {
-            res.status(error.status || 400).send({
-                error: {
-                    status: error.status,
-                    message: error.message
-                }
-            })
+            return res.status(200).json(success("OK", { data: "User updated"}, res.statusCode));
+
+        } catch (err) {
+           return res.status(err.status >= 400).json(error(err.message, res.statusCode))
         }
     }
 }

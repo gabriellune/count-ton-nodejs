@@ -2,6 +2,7 @@ import { Controller, Get, Post } from "@overnightjs/core";
 import { CountApiService } from "../../services/CountApiService";
 import { Request, Response } from 'express';
 import { CountApi } from "../../models/CountApi";
+import { success, error } from "../../interceptors/ResponseInterceptor"
 
 @Controller('api/v1/count-api')
 export class CountApiController {
@@ -14,14 +15,11 @@ export class CountApiController {
     async getCount(_req: Request, res: Response): Promise<CountApi> {
         try {
             const result = await this.service.getCount()
-            return res.send(result)
-        } catch (error) {
-            res.status(error.status || 400).send({
-                error: {
-                    status: error.status,
-                    message: error.message
-                }
-            })
+
+            return res.status(200).json(success("OK", { data: result }, res.statusCode));
+
+        } catch (err) {
+            return res.status(err.status >= 400).json(error(err.message, res.statusCode))
         }
     }
 
@@ -31,14 +29,10 @@ export class CountApiController {
             const { value } = req.body
             const result = await this.service.increaseVisits(value)
 
-            return res.send(result)
-        } catch (error) {
-            res.status(error.status || 400).send({
-                error: {
-                    status: error.status,
-                    message: error.message
-                }
-            })
+            return res.status(200).json(success("OK", { data: result }, res.statusCode));
+
+        } catch (err) {
+            return res.status(err.status >= 400).json(error(err.message, res.statusCode))
         }
     }
 }

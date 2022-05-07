@@ -1,8 +1,7 @@
 import { Controller, Get, Post } from "@overnightjs/core";
-import { CountApiService } from "../../services/CountApiService";
 import { Request, Response } from 'express';
 import { CountApi } from "../../models/CountApi";
-import { success, error } from "../../interceptors/ResponseInterceptor"
+import { CountApiService } from "../../services/CountApiService";
 
 @Controller('api/v1/count-api')
 export class CountApiController {
@@ -13,40 +12,11 @@ export class CountApiController {
 
     @Get()
     async getCount(_req: Request, res: Response): Promise<CountApi> {
-        let msg: string
-        let status: number
-
-        try {
-            const result = await this.service.getCount()
-
-            return res.status(200).json(success("OK", { data: result }, res.statusCode));
-
-        } catch (err) {
-            msg = err.message
-            status = err.status
-
-        } finally {
-            res.status(status).json(error(msg, res.statusCode))
-        }
+        return this.service.getCount(res)
     }
 
     @Post('increase-visits')
     async increaseVisits(req: Request, res: Response): Promise<CountApi> {
-        let msg: string
-        let status: number
-
-        try {
-            const { value } = req.body
-            const result = await this.service.increaseVisits(value)
-
-            return res.status(200).json(success("OK", { data: result }, res.statusCode));
-
-        } catch (err) {
-            msg = err.message
-            status = err.status
-
-        } finally {
-            res.status(status).json(error(msg, res.statusCode))
-        }
+        return this.service.increaseVisits(req, res)
     }
 }

@@ -20,12 +20,30 @@ export class UserRepository {
     }
 
     async getByCpf(cpf: string): Promise<User> {
-        const result = await DbUser.findOne({
+        const user = await DbUser.findOne({
             where: {
                 cpf
             }
         })
 
-        return result.toJSON() as User
+        if (!user) {
+            return null
+        }
+
+        return user.toJSON() as User
+    }
+
+    async getByEmail(email: string): Promise<User> {
+        const user = await DbUser.findOne({
+            where: {
+                email
+            }
+        })
+
+        if (!user) {
+            return null
+        }
+
+        return user.toJSON() as User
     }
 }

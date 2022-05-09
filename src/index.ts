@@ -1,11 +1,12 @@
 import { Server } from '@overnightjs/core';
 import dotenv from 'dotenv';
 import * as express from 'express';
+import logger from 'jet-logger';
+import swaggerUi from 'swagger-ui-express';
+import { AuthenticationController } from './api/v1/AuthenticationController';
 import { CountApiController } from './api/v1/CountApiController';
 import { UserController } from './api/v1/UserController';
-import logger from 'jet-logger';
-import swaggerUi from 'swagger-ui-express'
-import swaggerDocs from './documentation/swagger.json'
+import swaggerDocs from './documentation/swagger.json';
 
 dotenv.config()
 
@@ -22,7 +23,8 @@ export class App extends Server {
     private setupControllers(): void {
         super.addControllers([
             new CountApiController(),
-            new UserController()
+            new UserController(),
+            new AuthenticationController()
         ]);
     }
     

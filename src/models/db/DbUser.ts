@@ -5,7 +5,8 @@ export const DbUser = sequelize.define('users', {
 
    cpf: DataTypes.STRING,
    name: DataTypes.STRING,
-   email: DataTypes.STRING
+   email: DataTypes.STRING,
+   password: DataTypes.STRING
 })
 
 DbUser.sync()

@@ -2,6 +2,7 @@ import { Controller, Post, Put } from "@overnightjs/core";
 import { Request, Response } from 'express';
 import { error, success } from "../../interceptors/ResponseInterceptor";
 import { User } from "../../models/User";
+import { verifyJwt } from "../../services/JwtService";
 import { UserService } from "../../services/UserService";
 
 @Controller('api/v1/user')
@@ -26,6 +27,7 @@ export class UserController {
     @Put()
     async update(req: Request, res: Response): Promise<Object> {
         try {
+            verifyJwt(req)
             const payload = req.body as User
             await this.service.update(payload)
 

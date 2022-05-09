@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from "@overnightjs/core";
+import { Controller, Get, Patch } from "@overnightjs/core";
 import { Request, Response } from 'express';
 import { error, success } from "../../interceptors/ResponseInterceptor";
 import { CountApi } from "../../models/CountApi";
@@ -22,7 +22,7 @@ export class CountApiController {
         }
     }
 
-    @Post('increase-visits')
+    @Patch('increase-visits')
     async increaseVisits(req: Request, res: Response): Promise<CountApi> {
         try {
             const { value } = req.body

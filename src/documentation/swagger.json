@@ -264,12 +264,7 @@
                         "type": "object",
                         "properties": {
                             "data": {
-                                "type": "object",
-                                "properties": {
-                                    "token": {
-                                        "type": "string"
-                                    }
-                                }
+                                "type": "string"
                             }
                         }
                     }

@@ -3,11 +3,13 @@ import { ErrorHandle } from '../interceptors/ErrorHandle';
 import { User } from '../models/User';
 import { UserRepository } from '../repositories/UserRepository';
 import { formatCpf } from '../utils/FormatCpf';
+import { CryptoService } from './CryptoService';
 
 export class UserService {
 
     constructor(
-        private readonly repository: UserRepository = new UserRepository()
+        private readonly repository: UserRepository = new UserRepository(),
+        private readonly cryptoService: CryptoService = new CryptoService()
     ) { }
 
     async create(payload: User): Promise<void> {
@@ -95,9 +97,11 @@ export class UserService {
             throw new ErrorHandle(400, 'All data is mandatory!')
         }
 
+        const escryptedPassword = this.cryptoService.encrypt(password)
+
         const formattedCpf = formatCpf(cpf)
 
-        return { cpf: formattedCpf, name, email, password }
+        return { cpf: formattedCpf, name, email, password: escryptedPassword }
     }
 
     validateUpdateUser(payload: Partial<User>): User {

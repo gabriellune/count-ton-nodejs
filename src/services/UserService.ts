@@ -89,15 +89,15 @@ export class UserService {
 
 
     validateCreateUser(payload: User): User {
-        const { cpf, name, email } = payload
+        const { cpf, name, email, password } = payload
 
-        if (!cpf || !name || !email) {
+        if (!cpf || !name || !email || !password) {
             throw new ErrorHandle(400, 'All data is mandatory!')
         }
 
         const formattedCpf = formatCpf(cpf)
 
-        return { cpf: formattedCpf, name, email }
+        return { cpf: formattedCpf, name, email, password }
     }
 
     validateUpdateUser(payload: Partial<User>): User {
@@ -109,6 +109,6 @@ export class UserService {
 
         const formattedCpf = formatCpf(cpf)
 
-        return { cpf: formattedCpf, name, email }
+        return { cpf: formattedCpf, name, email } as User
     }
 }

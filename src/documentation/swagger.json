@@ -47,6 +47,11 @@
                 "tags": [
                     "Users"
                 ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -67,6 +72,40 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/authentication/login": {
+            "post": {
+                "summary": "User login",
+                "description": "This route is responsible to login.",
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "SUCCESS",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -77,6 +116,11 @@
                 "description": "This route is responsible to get site count.",
                 "tags": [
                     "Count Api"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -89,6 +133,48 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/count-api/key": {
+            "post": {
+                "summary": "Create key to count access",
+                "description": "This route is responsible to create key to count access.The value to be inserted is the maximum number of views that can be added per request",
+                "tags": [
+                    "Count Api"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCountApiKey"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "SUCCESS",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CountApiKeyResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 }
             }
@@ -99,6 +185,11 @@
                 "description": "This route is responsible to increase visits.",
                 "tags": [
                     "Count Api"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "requestBody": {
                     "content": {
@@ -120,6 +211,9 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 }
             }
@@ -138,6 +232,46 @@
                     },
                     "email": {
                         "type": "string"
+                    }
+                }
+            },
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "cpf": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "SUCCESS"
+                    },
+                    "error": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "code": {
+                        "type": "integer"
+                    },
+                    "results": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -218,6 +352,62 @@
                         }
                     }
                 }
+            },
+            "CreateCountApiKey": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "CountApiKeyResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "SUCCESS"
+                    },
+                    "error": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "code": {
+                        "type": "integer"
+                    },
+                    "results": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "integer"
+                                    },
+                                    "path": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "integer"
+                                    },
+                                    "key": {
+                                        "type": "string"
+                                    },
+                                    "namespace": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }

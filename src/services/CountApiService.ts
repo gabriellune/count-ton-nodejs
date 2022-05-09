@@ -31,4 +31,22 @@ export class CountApiService {
             throw new ErrorHandle(err.status, err.message)
         }
     }
+
+    async createKey(value: number): Promise<CountApi> {
+        try {
+            if (!value) {
+                throw new ErrorHandle(400, 'Value is mandatory!')
+            }
+
+            const result = await countapi.create({
+                namespace: process.env.TON_SITE,
+                update_upperbound: value
+            })
+
+            return result
+
+        } catch (err) {
+            throw new ErrorHandle(err.status, err.message)
+        }
+    }
 }

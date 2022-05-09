@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { ErrorHandle } from '../interceptors/ErrorHandle';
-import { error, success } from '../interceptors/ResponseInterceptor';
 import { User } from '../models/User';
 import { UserRepository } from '../repositories/UserRepository';
 import { formatCpf } from '../utils/FormatCpf';
@@ -11,10 +10,8 @@ export class UserService {
         private readonly repository: UserRepository = new UserRepository()
     ) { }
 
-    async create(req: Request, res: Response): Promise<User> {
+    async create(payload: User): Promise<void> {
         try {
-            const payload = req.body as User
-
             const user = this.validateCreateUser(payload)
 
             const existentUser = await this.getExistentUser(user.cpf, user.email)
@@ -24,17 +21,13 @@ export class UserService {
             }
 
             await this.repository.create(user)
-
-            return res.status(201).send(success('User created successfully', { data: payload }, 201))
         } catch (err) {
-            return res.status(err.status).send(error(err.message, err.status))
+            throw new ErrorHandle(err.status, err.message)
         }
     }
 
-    async update(req: Request, res: Response): Promise<Object> {
+    async update(payload: User): Promise<void> {
         try {
-            const payload = req.body as User
-
             const user = this.validateUpdateUser(payload)
 
             const existentUser = await this.getByCpf(user.cpf)
@@ -44,10 +37,8 @@ export class UserService {
             }
 
             await this.repository.update(user)
-
-            return res.status(200).send(success('User updated successfully', { data: user }, 200))
         } catch (err) {
-            return res.status(err.status).send(error(err.message, err.status))
+            throw new ErrorHandle(err.status, err.message)
         }
     }
 
@@ -76,7 +67,7 @@ export class UserService {
         return existentUser
     }
 
-    private async getByCpf(cpf: string): Promise<User> {
+    async getByCpf(cpf: string): Promise<User> {
         try {
             const result = await this.repository.getByCpf(cpf)
 
@@ -86,7 +77,7 @@ export class UserService {
         }
     }
 
-    private async getByEmail(email: string): Promise<User> {
+    async getByEmail(email: string): Promise<User> {
         try {
             const result = await this.repository.getByEmail(email)
 
@@ -97,7 +88,7 @@ export class UserService {
     }
 
 
-    private validateCreateUser(payload: User): User {
+    validateCreateUser(payload: User): User {
         const { cpf, name, email } = payload
 
         if (!cpf || !name || !email) {
@@ -109,7 +100,7 @@ export class UserService {
         return { cpf: formattedCpf, name, email }
     }
 
-    private validateUpdateUser(payload: Partial<User>): User {
+    validateUpdateUser(payload: Partial<User>): User {
         const { cpf, name, email } = payload
 
         if (!cpf) {

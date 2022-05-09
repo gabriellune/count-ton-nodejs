@@ -40,4 +40,20 @@ describe('CountApiService', () => {
             await expect(service.increaseVisits(0)).rejects.toThrow(new Error());
         })
     })
+
+    describe('createKey()', () => {
+        it('should call CountApiService create key with correct value', async () => {
+            const data = jest.spyOn(service, 'createKey').mockImplementation()
+
+            await service.createKey(0)
+
+            expect(data).toHaveBeenCalledWith(0)
+        })
+
+        it('should throw if CountApiService create key throws', async () => {
+            jest.spyOn(service, 'createKey').mockRejectedValueOnce(new Error());
+
+            await expect(service.createKey(0)).rejects.toThrow(new Error());
+        })
+    })
 })

@@ -6,17 +6,17 @@ export class UserRepository {
     constructor() { }
 
     async create(payload: User): Promise<User> {
-        const { cpf, name, email } = payload
+        const { cpf, name, email, password } = payload
 
-        await DbUser.create({ cpf, name, email })
+        await DbUser.create({ cpf, name, email, password })
 
         return payload
     }
 
     async update(payload: Partial<User>): Promise<void> {
-        const { cpf, name, email } = payload
+        const { cpf, name, email, password } = payload
 
-        await DbUser.update({ cpf, name, email }, { where: { cpf } })
+        await DbUser.update({ cpf, name, email, password }, { where: { cpf } })
     }
 
     async getByCpf(cpf: string): Promise<User> {

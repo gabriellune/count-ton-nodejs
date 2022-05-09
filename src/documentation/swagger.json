@@ -1,0 +1,224 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Count Ton API's",
+        "description": "API's to get the site count and to manager users."
+    },
+    "servers": [
+        {
+            "url": "http:localhost:3000/api/v1",
+            "description": "Test API"
+        }
+    ],
+    "paths": {
+        "/user": {
+            "post": {
+                "summary": "User register",
+                "description": "This route is responsible to create new users.",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "SUCCESS",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "User update",
+                "description": "This route is responsible to update new users.",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/count-api": {
+            "get": {
+                "summary": "Get site count",
+                "description": "This route is responsible to get site count.",
+                "tags": [
+                    "Count Api"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CountApiResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/count-api/increase-visits": {
+            "patch": {
+                "summary": "Increase Visits",
+                "description": "This route is responsible to increase visits.",
+                "tags": [
+                    "Count Api"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IncreaseVisits"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/CountApiResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "cpf": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UserResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "SUCCESS"
+                    },
+                    "error": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "code": {
+                        "type": "integer"
+                    },
+                    "results": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "IncreaseVisits": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "CountApiResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "SUCCESS"
+                    },
+                    "error": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "code": {
+                        "type": "integer"
+                    },
+                    "results": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "integer"
+                                    },
+                                    "path": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

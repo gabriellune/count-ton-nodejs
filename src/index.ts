@@ -4,6 +4,8 @@ import * as express from 'express';
 import { CountApiController } from './api/v1/CountApiController';
 import { UserController } from './api/v1/UserController';
 import logger from 'jet-logger';
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocs from './documentation/swagger.json'
 
 dotenv.config()
 
@@ -13,6 +15,7 @@ export class App extends Server {
         super()
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: true}));
+        this.app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
         this.setupControllers();
     }
 

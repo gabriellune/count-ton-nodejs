@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Count Ton API's",
+        "title": "Count Site API's",
         "description": "API's to get the site count and to manager users."
     },
     "servers": [

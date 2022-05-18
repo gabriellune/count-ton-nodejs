@@ -1,6 +1,6 @@
-# count-ton 🚀
+# count-site 🚀
 
-Project responsible for count ton site access and managing user in NodeJs with Typescript.
+Project responsible for count site access and managing user in NodeJs with Typescript.
 
 ## Repository Technologies 👨‍💻 
 

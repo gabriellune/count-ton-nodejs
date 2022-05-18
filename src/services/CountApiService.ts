@@ -6,7 +6,7 @@ export class CountApiService {
 
     async getCount(): Promise<CountApi> {
         try {
-            const result = await countapi.get(process.env.TON_SITE, process.env.COUNT_API_KEY)
+            const result = await countapi.get(process.env.SITE, process.env.COUNT_API_KEY)
 
             return result
 
@@ -21,7 +21,7 @@ export class CountApiService {
                 throw new ErrorHandle(400, 'Value is mandatory!')
             }
 
-            const result = await countapi.update(process.env.TON_SITE, process.env.COUNT_API_KEY, value).then((result) => {
+            const result = await countapi.update(process.env.SITE, process.env.COUNT_API_KEY, value).then((result) => {
                 return result
             })
 
@@ -39,7 +39,7 @@ export class CountApiService {
             }
 
             const result = await countapi.create({
-                namespace: process.env.TON_SITE,
+                namespace: process.env.SITE,
                 update_upperbound: value
             })
 

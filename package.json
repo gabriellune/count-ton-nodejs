@@ -1,5 +1,5 @@
 {
-  "name": "count-ton-nodejs",
+  "name": "count-views-site-nodejs",
   "version": "1.0.0",
   "description": "🚧 Project in development 🚧",
   "main": "src/index.ts",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabriellune/count-ton-nodejs.git"
+    "url": "git+https://github.com/gabriellune/count-views-site-nodejs.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gabriellune/count-ton-nodejs/issues"
+    "url": "https://github.com/gabriellune/count-views-site-nodejs/issues"
   },
-  "homepage": "https://github.com/gabriellune/count-ton-nodejs#readme",
+  "homepage": "https://github.com/gabriellune/count-views-site-nodejs#readme",
   "dependencies": {
     "@overnightjs/core": "^1.7.6",
     "countapi-js": "^1.0.2",

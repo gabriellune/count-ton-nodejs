@@ -30,7 +30,6 @@ export class CountApiController {
         try {
             verifyJwt(req)
             const { value } = req.body
-            console.log(value)
 
             const result = await this.service.increaseVisits(value)
 
